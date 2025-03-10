@@ -1,0 +1,74 @@
+Below are concise notes summarizing the Strategy Pattern, including key principles mentioned in Head First Design Patterns and similar texts. You can include these notes in your code package for a quick review:
+
+---
+
+### Strategy Pattern Summary Notes
+
+- **Definition:**  
+  - **Strategy Pattern** defines a family of algorithms, encapsulates each one, and makes them interchangeable. It lets the algorithm vary independently from the clients that use it.
+
+- **Key Principles:**
+  - **Encapsulation:** Each behavior (or algorithm) is encapsulated in its own class.
+  - **Interchangeability:** Different behaviors can be swapped easily at runtime.
+  - **Composition over Inheritance:** Instead of hardcoding behavior with inheritance, the Context class holds a reference to a Strategy, allowing for more flexible and reusable code.
+  - **Open/Closed Principle:** The system is open for extension (by adding new strategies) but closed for modification (existing code doesn’t change).
+
+- **Structure:**
+  - **Context:** The class that uses a Strategy. It delegates the behavior to the Strategy interface.
+  - **Strategy Interface:** Declares common methods (e.g., `fly()`, `quack()` in the duck example).
+  - **Concrete Strategies:** Specific implementations of the Strategy interface (e.g., `FlyWithWings`, `NoFly`, `Quack`, `MuteQuack`).
+
+- **Usage:**
+  - Ideal when you need different variants of an algorithm.
+  - Useful for scenarios requiring runtime selection of behavior.
+  - Avoids cluttering code with conditional statements (if/else or switch statements) to choose algorithms.
+
+- **Example in a Duck Context:**
+  ```java
+  public abstract class Duck {
+      FlyBehavior flyBehavior;
+      QuackBehavior quackBehavior;
+  
+      public abstract void display();
+  
+      public void performFly() {
+          flyBehavior.fly();
+      }
+  
+      public void performQuack() {
+          quackBehavior.quack();
+      }
+  
+      public void setFlyBehavior(FlyBehavior fb) {
+          flyBehavior = fb;
+      }
+  
+      public void setQuackBehavior(QuackBehavior qb) {
+          quackBehavior = qb;
+      }
+  }
+  
+  public class MallardDuck extends Duck {
+      public MallardDuck() {
+          quackBehavior = new Quack();
+          flyBehavior = new FlyWithWings();
+      }
+  
+      public void display() {
+          System.out.println("I'm a real Mallard duck");
+      }
+  }
+  ```
+
+- **Benefits:**
+  - **Flexibility:** Easily change algorithms at runtime.
+  - **Maintainability:** Adding new behaviors doesn't alter existing code.
+  - **Reusability:** Strategies can be reused across different contexts.
+
+- **Potential Drawbacks:**
+  - **Class Explosion:** Can result in many small strategy classes.
+  - **Overhead:** Slightly increases complexity if overused for trivial behaviors.
+
+---
+
+These notes should serve as a handy reference for understanding and recalling the core concepts and benefits of the Strategy Pattern. Feel free to add them as a README or comments in your code package for future review.
